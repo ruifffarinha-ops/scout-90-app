@@ -107,7 +107,10 @@ body.field-mode{background:#eaf0ec}body.field-mode .app-header,body.field-mode .
 
   <div class="toast" id="toast" role="status"></div>
   <input type="file" id="importInput" accept="application/json,.json" hidden>
-  <script>const eventTypes = [
+  <script>(()=>{
+'use strict';
+
+const eventTypes = [
   {id:'buildRight',icon:'↗',name:'Construção pela direita',desc:'Progressão ofensiva no corredor direito'},
   {id:'buildCenter',icon:'↑',name:'Construção pelo meio',desc:'Progressão ofensiva no corredor central'},
   {id:'buildLeft',icon:'↖',name:'Construção pela esquerda',desc:'Progressão ofensiva no corredor esquerdo'},
@@ -283,6 +286,7 @@ $('#importInput').addEventListener('change',e=>{if(e.target.files[0])importBacku
 $('#printBtn').onclick=()=>{state.status='done';save();window.print()};
 $('#shareBtn').onclick=async()=>{renderReport();const text=`Relatório: ${state.team}\n${generateInsights().join('\n')}\nAtaques: ${count('attack')} · Remates: ${count('shot')} · Golos: ${state.score}`;if(navigator.share){try{await navigator.share({title:`Observação — ${state.team}`,text})}catch{}}else{await navigator.clipboard.writeText(text);toast('Relatório copiado')}};
 if(!state.level)state.level='essential';if(!state.context)state.context={};if(!state.sheetId)state.sheetId=newId();if(!state.status)state.status='field';if(!state.matchDate)state.matchDate=new Date().toISOString().slice(0,10);if(!state.fieldButtons)state.fieldButtons=[...defaultFieldButtons];state.events=(state.events||[]).map(e=>({...e,period:e.period||(e.time>2700?'2P':'1P'),minute:e.minute||Math.floor((e.time||0)/60)+1}));sync();save();renderSheets();if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
+})();
 </script>
 </body>
 </html>
