@@ -1,4 +1,4 @@
-const CACHE='scout90-v11';
+const CACHE='scout90-v14';
 
 self.addEventListener('install',event=>{
   self.skipWaiting();
